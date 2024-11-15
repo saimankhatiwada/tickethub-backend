@@ -1,0 +1,79 @@
+services:
+  ticket-hub-api:
+    container_name: TicketHub.Api
+    build:
+      context: .
+      dockerfile: src/TicketHub.Api/Dockerfile
+    depends_on:
+      - ticket-hub-db
+      - ticket-hub-idp
+      - ticket-hub-seq
+      - ticket-hub-cache
+      - ticket-hub-object-storage
+    networks:
+      - ticket-hub-backend
+
+  ticket-hub-db:
+    image: postgres:latest
+    container_name: TicketHub.Db
+    environment:
+      - POSTGRES_DB=ticket_hub
+      - POSTGRES_USER=ticket_hub_user
+      - POSTGRES_PASSWORD=9d9dfbfbfdfd@S
+    volumes:
+      - ./.containers/database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ticket-hub-backend
+
+  ticket-hub-idp:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: TicketHub.Identity
+    command: start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=satoox
+      - KEYCLOAK_ADMIN_PASSWORD=9d9dfbfbfdfd@S
+    volumes:
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files/cipher-realm-export.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - "18080:8080"
+    networks:
+      - ticket-hub-backend
+
+  ticket-hub-seq:
+    image: datalust/seq:latest
+    container_name: TicketHub.Seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    networks:
+      - ticket-hub-backend
+
+  ticket-hub-cache:
+    image: redis:latest
+    container_name: TicketHub.Cache
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - ticket-hub-backend
+
+  ticket-hub-object-storage:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    container_name: TicketHub.Object-Storage
+    volumes:
+      - ./.containers/object-storage/data:/data
+    ports:
+      - "10000:10000"
+    command: "azurite-blob --blobHost 0.0.0.0 -l /data"
+    networks:
+      - ticket-hub-backend
+
+networks:
+  ticket-hub-backend:
+    name: ticket-hub-backend
+    driver: bridge
