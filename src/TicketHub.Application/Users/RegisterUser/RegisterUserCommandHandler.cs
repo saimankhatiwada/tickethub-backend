@@ -31,7 +31,7 @@ internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserC
             new Email(request.Email),
             new Bio("N/A"),
             new MobileNumber(request.MobileNumber),
-            new ImageName("default/default-image.png"),
+            new ImageUrl("default/default-image.png"),
             new IsEmailVerified(false),
             new IsMobileNumberVerified(false),
             new IsTermsAndCondition(request.IsTermsAndConditions),

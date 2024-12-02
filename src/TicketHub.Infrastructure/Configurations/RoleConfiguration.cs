@@ -10,9 +10,9 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.ToTable("roles");
 
-        builder.HasKey(role => role.Id);
+        builder.HasKey(r => r.Id);
 
-        builder.HasMany(role => role.Permissions)
+        builder.HasMany(r => r.Permissions)
             .WithMany()
             .UsingEntity<RolePermission>();
 

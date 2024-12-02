@@ -7,7 +7,7 @@ public sealed class User : Entity<UserId>
 {
     private readonly List<Role> _roles = [];
 
-    private User(UserId id, FirstName firstName, LastName lastName, Email email, Bio bio, MobileNumber mobileNumber, ImageName imageName, IsEmailVerified isEmailVerified, IsMobileNumberVerified isMobileNumberVerified, IsTermsAndCondition isTermsAndCondition, IsSuspended isSuspended)
+    private User(UserId id, FirstName firstName, LastName lastName, Email email, Bio bio, MobileNumber mobileNumber, ImageUrl imageUrl, IsEmailVerified isEmailVerified, IsMobileNumberVerified isMobileNumberVerified, IsTermsAndCondition isTermsAndCondition, IsSuspended isSuspended)
         : base(id)
     {
         FirstName = firstName;
@@ -15,7 +15,7 @@ public sealed class User : Entity<UserId>
         Email = email;
         Bio = bio;
         MobileNumber = mobileNumber;
-        ImageName = imageName;
+        ImageUrl = imageUrl;
         IsEmailVerified = isEmailVerified;
         IsMobileNumberVerified = isMobileNumberVerified;
         IsTermsAndCondition = isTermsAndCondition;
@@ -36,7 +36,7 @@ public sealed class User : Entity<UserId>
 
     public MobileNumber MobileNumber { get; private set; }
 
-    public ImageName ImageName { get; private set; }
+    public ImageUrl ImageUrl { get; private set; }
 
     public IsEmailVerified IsEmailVerified { get; private set; }
 
@@ -50,9 +50,9 @@ public sealed class User : Entity<UserId>
 
     public IReadOnlyCollection<Role> Roles => [.. _roles];
 
-    public static User Create(FirstName firstName, LastName lastName, Email email, Bio bio, MobileNumber mobileNumber, ImageName imageName, IsEmailVerified isEmailVerified, IsMobileNumberVerified isMobileNumberVerified, IsTermsAndCondition isTermsAndCondition, IsSuspended isSuspended, Role role)
+    public static User Create(FirstName firstName, LastName lastName, Email email, Bio bio, MobileNumber mobileNumber, ImageUrl imageUrl, IsEmailVerified isEmailVerified, IsMobileNumberVerified isMobileNumberVerified, IsTermsAndCondition isTermsAndCondition, IsSuspended isSuspended, Role role)
     {
-        var user = new User(UserId.New(), firstName, lastName, email, bio, mobileNumber, imageName, isEmailVerified, isMobileNumberVerified, isTermsAndCondition, isSuspended);
+        var user = new User(UserId.New(), firstName, lastName, email, bio, mobileNumber, imageUrl, isEmailVerified, isMobileNumberVerified, isTermsAndCondition, isSuspended);
 
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 

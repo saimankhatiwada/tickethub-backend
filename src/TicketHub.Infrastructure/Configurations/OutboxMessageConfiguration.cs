@@ -10,8 +10,8 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
     {
         builder.ToTable("outbox_messages");
 
-        builder.HasKey(outboxMessage => outboxMessage.Id);
+        builder.HasKey(o => o.Id);
 
-        builder.Property(outboxMessage => outboxMessage.Content).HasColumnType("jsonb");
+        builder.Property(o => o.Content).HasColumnType("jsonb");
     }
 }

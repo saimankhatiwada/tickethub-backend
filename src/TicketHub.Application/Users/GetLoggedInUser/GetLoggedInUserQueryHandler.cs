@@ -43,7 +43,7 @@ internal sealed class GetLoggedInUserQueryHandler : IQueryHandler<GetLoggedInUse
                 u.is_email_verified AS IsEmailVerified,
                 u.is_mobile_number_verified AS IsMobileNumberVerified,
                 u.is_suspended AS IsSuspended,
-                u.image_name AS ImageUrl
+                u.image_url AS ImageUrl
             FROM users u
             LEFT JOIN role_user ru ON u.id = ru.users_id
             LEFT JOIN roles r ON ru.roles_id = r.id

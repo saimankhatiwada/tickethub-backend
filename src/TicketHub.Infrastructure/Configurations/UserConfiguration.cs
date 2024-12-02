@@ -10,50 +10,45 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("users");
 
-        builder.HasKey(user => user.Id);
+        builder.HasKey(u => u.Id);
 
-        builder.Property(user => user.Id)
+        builder.Property(u => u.Id)
             .HasConversion(id => id.Value, value => new UserId(value));
 
-        builder.Property(user => user.FirstName)
-            .HasMaxLength(100)
+        builder.Property(u => u.FirstName)
             .HasConversion(firstName => firstName.Value, value => new FirstName(value));
 
-        builder.Property(user => user.LastName)
-            .HasMaxLength(100)
+        builder.Property(u => u.LastName)
             .HasConversion(firstName => firstName.Value, value => new LastName(value));
 
-        builder.Property(user => user.Email)
-            .HasMaxLength(100)
+        builder.Property(u => u.Email)
             .HasConversion(email => email.Value, value => new Email(value));
 
-        builder.Property(user => user.Bio)
+        builder.Property(u => u.Bio)
             .HasConversion(bio => bio.Value, value => new Bio(value));
 
-        builder.Property(user => user.MobileNumber)
-            .HasMaxLength(100)
+        builder.Property(u => u.MobileNumber)
             .HasConversion(mobileNumber => mobileNumber.Value, value => new MobileNumber(value));
 
-        builder.Property(user => user.ImageName)
-            .HasMaxLength(100)
-            .HasConversion(imageName => imageName.Value, value => new ImageName(value));
+        builder.Property(u => u.ImageUrl)
+            .HasConversion(imageUrl => imageUrl.Value, value => new ImageUrl(value));
 
-        builder.Property(user => user.IsEmailVerified)
+        builder.Property(u => u.IsEmailVerified)
             .HasConversion(isEmailVerified => isEmailVerified.Value, value => new IsEmailVerified(value));
 
-        builder.Property(user => user.IsMobileNumberVerified)
+        builder.Property(u => u.IsMobileNumberVerified)
             .HasConversion(isMobileNumberVerified => isMobileNumberVerified.Value, value => new IsMobileNumberVerified(value));
 
-        builder.Property(user => user.IsTermsAndCondition)
+        builder.Property(u => u.IsTermsAndCondition)
             .HasConversion(isTermAndCondition => isTermAndCondition.Value, value => new IsTermsAndCondition(value));
 
-        builder.Property(user => user.IsSuspended)
+        builder.Property(u => u.IsSuspended)
             .HasConversion(isSuspended => isSuspended.Value, value => new IsSuspended(value));
         
-        builder.HasIndex(user => user.Email).IsUnique();
+        builder.HasIndex(u => u.Email).IsUnique();
 
-        builder.HasIndex(user => user.MobileNumber).IsUnique();
+        builder.HasIndex(u => u.MobileNumber).IsUnique();
 
-        builder.HasIndex(user => user.IdentityId).IsUnique();
+        builder.HasIndex(u => u.IdentityId).IsUnique();
     }
 }

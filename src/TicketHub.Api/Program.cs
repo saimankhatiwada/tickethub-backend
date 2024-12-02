@@ -15,6 +15,7 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 
 builder.Services.AddControllers();
 
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

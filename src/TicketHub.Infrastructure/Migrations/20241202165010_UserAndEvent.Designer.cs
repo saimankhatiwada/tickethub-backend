@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketHub.Infrastructure.Migrations;
 
 [DbContext(typeof(ApplicationDbContext))]
-internal sealed class ApplicationDbContextModelSnapshot : ModelSnapshot
+[Migration("20241202165010_UserAndEvent")]
+partial class UserAndEvent
 {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
         modelBuilder
             .HasAnnotation("ProductVersion", "8.0.10")
@@ -598,12 +600,15 @@ internal sealed class ApplicationDbContextModelSnapshot : ModelSnapshot
                     .IsRequired();
             });
 
-        modelBuilder.Entity("TicketHub.Domain.Events.Tickets.Amenities.Amenity", b => b.HasOne("TicketHub.Domain.Events.Tickets.Ticket", null)
+        modelBuilder.Entity("TicketHub.Domain.Events.Tickets.Amenities.Amenity", b =>
+            {
+                b.HasOne("TicketHub.Domain.Events.Tickets.Ticket", null)
                     .WithMany()
                     .HasForeignKey("TicketId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired()
-                    .HasConstraintName("fk_amenities_tickets_ticket_id"));
+                    .HasConstraintName("fk_amenities_tickets_ticket_id");
+            });
 
         modelBuilder.Entity("TicketHub.Domain.Events.Tickets.Ticket", b =>
             {
